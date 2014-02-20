@@ -1,0 +1,14 @@
+{
+  "name": "astronaut",
+  "version": "0.0.1",
+  "author": "Ryan Jones <ryan.joshua.jones@gmail.com>",
+  "description": "Just a routine mission",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-stylus": "~0.12.0",
+    "grunt-contrib-coffee": "~0.10.1",
+    "nib": "~1.0.2"
+  }
+}

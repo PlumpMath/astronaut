@@ -1,0 +1,12 @@
+.cockpit-main{z-index:500;position:fixed;top:0;right:0;left:0;bottom:0;background:transparent}
+.booter{font-size:3em;background-color:#fff;color:#000;display:inline-block}
+
+html,body{margin:0;padding:0;height:100%;width:100%}
+a{text-decoration:none;color:inherit;}
+a:hover,a:visited{text-decoration:none;color:inherit}
+.cf{zoom:1}
+.cf:before,.cf:after{content:"";display:table}
+.cf:after{clear:both}
+
+.terminal-container{width:600px;height:250px;opacity:0;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";filter:alpha(opacity=0);background-color:#222;border:1px solid #ddd;margin:.25em 0 0 .25em;}
+.terminal-container.visible{opacity:1;-ms-filter:none;filter:none;-webkit-transition:opacity 1s;-moz-transition:opacity 1s;-o-transition:opacity 1s;-ms-transition:opacity 1s;transition:opacity 1s}
