@@ -66,11 +66,16 @@ define [
       @scene.add dLight
 
     createPlanets: ->
+      # let there be light
       earth = THREEx.Planets.createEarth()
       clouds = THREEx.Planets.createEarthCloud()
 
       @scene.add earth
       @scene.add clouds
+
+      @updateFns.push (delta, now) ->
+        earth.rotation.x += 0.05 * delta
+        earth.rotation.y += 0.1 * delta
 
       @updateFns.push (delta, now) ->
         clouds.rotation.y += 1/8 * delta

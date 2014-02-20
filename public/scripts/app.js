@@ -63,6 +63,10 @@
         clouds = THREEx.Planets.createEarthCloud();
         this.scene.add(earth);
         this.scene.add(clouds);
+        this.updateFns.push(function(delta, now) {
+          earth.rotation.x += 0.05 * delta;
+          return earth.rotation.y += 0.1 * delta;
+        });
         return this.updateFns.push(function(delta, now) {
           return clouds.rotation.y += 1 / 8 * delta;
         });
