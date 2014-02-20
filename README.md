@@ -1,8 +1,6 @@
 astronaut
 =========
 
-## a space tragedy ##
-
 To build: ```npm install``` and ```grunt```
 
 ###Directory structure:###
