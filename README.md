@@ -14,6 +14,7 @@ Current dependencies:
   * three.js
   * threex.planets
   * jQuery
+  * Handlebars
   * radio.js
   * stylus
   * coffeescript
