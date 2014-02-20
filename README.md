@@ -11,6 +11,7 @@ To build: ```npm install``` and ```grunt```
 ###Current dependencies:###
   * three.js
   * threex.planets
+  * require.js
   * jQuery
   * Handlebars
   * radio.js
