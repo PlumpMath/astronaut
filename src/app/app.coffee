@@ -1,10 +1,11 @@
 define [
   'jquery'
   'threejs'
+  'radio'
   'scripts/cockpit'
   'planets'
   'atmospheres'
-], ($, THREE, Cockpit) ->
+], ($, THREE, radio, Cockpit) ->
 
   class App
     constructor: (@options) ->
@@ -18,10 +19,14 @@ define [
 
       @renderer.setSize window.innerWidth, window.innerHeight
       @renderer.shadowMapEnabled = true
-      document.body.appendChild @renderer.domElement
+      $('body').append @renderer.domElement
+      $('canvas').addClass 'blur'
+
+      @listenForEvents()
 
       @createScene()
       @createCamera()
+      @createStarfield()
       @createLights()
       @createPlanets()
       # @createControls()
@@ -38,7 +43,20 @@ define [
         0.01,
         100
       )
-      @camera.position.z = 3
+      @camera.position.z = 10
+
+      @updateFns.push (delta, now) =>
+        @camera.rotation.x += 0.01 * delta
+        @camera.rotation.y += 0.015 * delta
+
+    createStarfield: ->
+      geometry = new THREE.SphereGeometry 90, 32, 32
+      material = new THREE.MeshBasicMaterial()
+      material.map = THREE.ImageUtils.loadTexture 'images/galaxy_starfield.png'
+      material.side = THREE.BackSide
+      starfield = new THREE.Mesh geometry, material
+
+      @scene.add starfield
 
     createCockpit: ->
       cockpit = new Cockpit
@@ -79,6 +97,11 @@ define [
 
       @updateFns.push (delta, now) ->
         clouds.rotation.y += 1/8 * delta
+
+    listenForEvents: ->
+      radio('bootUp').subscribe (status) =>
+        if status is 'complete'
+          $('canvas').removeClass 'blur'
 
     render: ->
       @updateFns.push =>

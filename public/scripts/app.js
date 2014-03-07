@@ -1,5 +1,5 @@
 (function() {
-  define(['jquery', 'threejs', 'scripts/cockpit', 'planets', 'atmospheres'], function($, THREE, Cockpit) {
+  define(['jquery', 'threejs', 'radio', 'scripts/cockpit', 'planets', 'atmospheres'], function($, THREE, radio, Cockpit) {
     var App;
     return App = (function() {
       function App(options) {
@@ -13,9 +13,12 @@
         });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.shadowMapEnabled = true;
-        document.body.appendChild(this.renderer.domElement);
+        $('body').append(this.renderer.domElement);
+        $('canvas').addClass('blur');
+        this.listenForEvents();
         this.createScene();
         this.createCamera();
+        this.createStarfield();
         this.createLights();
         this.createPlanets();
         this.render();
@@ -28,7 +31,23 @@
 
       App.prototype.createCamera = function() {
         this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100);
-        return this.camera.position.z = 3;
+        this.camera.position.z = 10;
+        return this.updateFns.push((function(_this) {
+          return function(delta, now) {
+            _this.camera.rotation.x += 0.01 * delta;
+            return _this.camera.rotation.y += 0.015 * delta;
+          };
+        })(this));
+      };
+
+      App.prototype.createStarfield = function() {
+        var geometry, material, starfield;
+        geometry = new THREE.SphereGeometry(90, 32, 32);
+        material = new THREE.MeshBasicMaterial();
+        material.map = THREE.ImageUtils.loadTexture('images/galaxy_starfield.png');
+        material.side = THREE.BackSide;
+        starfield = new THREE.Mesh(geometry, material);
+        return this.scene.add(starfield);
       };
 
       App.prototype.createCockpit = function() {
@@ -70,6 +89,16 @@
         return this.updateFns.push(function(delta, now) {
           return clouds.rotation.y += 1 / 8 * delta;
         });
+      };
+
+      App.prototype.listenForEvents = function() {
+        return radio('bootUp').subscribe((function(_this) {
+          return function(status) {
+            if (status === 'complete') {
+              return $('canvas').removeClass('blur');
+            }
+          };
+        })(this));
       };
 
       App.prototype.render = function() {

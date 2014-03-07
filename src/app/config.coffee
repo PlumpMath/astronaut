@@ -9,6 +9,7 @@ require.config {
     'text': 'lib/text'
     'handlebars': 'lib/handlebars-v1.3.0'
     'terminal': 'lib/jquery.terminal-0.7.12'
+    'radio': 'lib/radio.min'
   }
 
   shim: {
